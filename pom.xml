@@ -2,29 +2,67 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>9</version>
+    </parent>
+
     <groupId>com.github.dgautier</groupId>
     <artifactId>icn-maven-plugin</artifactId>
-    <version>0.0</version>
-
+    <version>0.1-SNAPSHOT</version>
+    <packaging>maven-plugin</packaging>
+    
     <prerequisites>
         <maven>3.0</maven>
     </prerequisites>
 
-    <packaging>maven-plugin</packaging>
+    
     <name>IBM Content Navigator Maven Plugin</name>
+    <description> A maven plugin used to deploy IBM Content Navigator Plugins as part of the maven lifecycle</description>
+    <url>https://github.com/dgautier/icn-maven-plugin</url>
+
+    <licenses>
+        <license>
+            <name>Apache 2</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+            <comments>A business-friendly OSS license</comments>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>David Gautier</name>
+            <organization>Ginko</organization>
+            <email>david.gautier@ginko.io</email>
+        </developer>
+    </developers>
+
+    <scm>
+        <developerConnection>scm:git:git@github.com/dgautier/icn-maven-plugin.git</developerConnection>
+        <connection>scm:git:git@github.com/dgautier/icn-maven-plugin.git</connection>
+        <url>git@github.com/dgautier/icn-maven-plugin</url>
+        <tag>HEAD</tag>
+    </scm>
+    <issueManagement>
+        <system>github</system>
+        <url>https://github.com/dgautier/icn-maven-plugin/issues</url>
+    </issueManagement>
+
 
     <dependencies>
         <!-- maven plugin dependencies -->
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-plugin-api</artifactId>
-            <version>${maven.version}</version>
+            <version>${version.maven}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.maven</groupId>
             <artifactId>maven-core</artifactId>
-            <version>${maven.version}</version>
+            <version>${version.maven}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -33,14 +71,43 @@
             <version>3.4</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.dgautier</groupId>
+            <artifactId>maven-plugin-tools</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        
         <!-- Remote System Utility -->
         <dependency>
             <groupId>com.xebialabs.overthere</groupId>
             <artifactId>overthere</artifactId>
             <version>2.4.3</version>
             <scope>compile</scope>
-        </dependency>        
+        </dependency>  
+        
+        <!-- IBM Content Navigator Tools -->
+        <dependency>
+            <groupId>com.ibm.ecm</groupId>
+            <artifactId>navigator-api</artifactId>
+            <version>${version.icn}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dgautier</groupId>
+            <artifactId>icn-tools</artifactId>
+            <version>0.2-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- JSON parser -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+            <scope>compile</scope>
+        </dependency>
         
         <!-- Test dependencies -->
         <dependency>
@@ -58,6 +125,40 @@
     </dependencies>
 
     <properties>
-        <maven.version>3.2.1</maven.version>
+        <version.maven>3.2.1</version.maven>
+        <version.icn>2.0.3.1</version.icn>
     </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>com.mycila</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <header>com/mycila/maven/plugin/license/templates/APACHE-2.txt</header>
+                    <useDefaultExcludes>true</useDefaultExcludes>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>format</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>external.atlassian.jgitflow</groupId>
+                <artifactId>jgitflow-maven-plugin</artifactId>
+                <version>1.0-m4.3</version>
+                <configuration>
+                    <enableSshAgent>true</enableSshAgent>
+                    <pushReleases>true</pushReleases>
+                    <pushFeatures>true</pushFeatures>
+                    <pushHotfixes>true</pushHotfixes>
+                    <allowSnapshots>true</allowSnapshots>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>
