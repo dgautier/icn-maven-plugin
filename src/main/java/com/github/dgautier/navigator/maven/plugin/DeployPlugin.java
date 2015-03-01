@@ -109,7 +109,6 @@ public class DeployPlugin extends CopyTargetMojo {
         try {
             getLog().debug("Logging to ICN : " + navigatorUrl);
             HttpPost post = new HttpPost(navigatorUrl + "/container/logon.do");
-//			HttpPost post = new HttpPost(navigatorUrl+"/p8/logon.do");
             ICNUtils.addFormHeader(post);
 
             List<NameValuePair> nvps = new ArrayList<NameValuePair>();
@@ -118,7 +117,6 @@ public class DeployPlugin extends CopyTargetMojo {
             nvps.add(new BasicNameValuePair("desktop", "admin"));
             nvps.add(new BasicNameValuePair("userid", adminICNUser));
             nvps.add(new BasicNameValuePair("password", adminICNPassword));
-//			nvps.add(new BasicNameValuePair("repositoryId", "P8PASREL"));
 
 
             post.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
@@ -158,6 +156,11 @@ public class DeployPlugin extends CopyTargetMojo {
     }
 
 
+    /**
+     * TODO use json file to load configuration from
+     * @return
+     * @throws Exception
+     */
     protected JsonResponse savePlugin() throws Exception {
         getLog().debug("Saving plugin configuration : ");
         try {
