@@ -13,6 +13,11 @@
     <packaging>maven-plugin</packaging>
     <name>IBM Content Navigator Maven Plugin</name>
 
+    <properties>
+        <maven.version>3.2.1</maven.version>
+        <icn.version>2.0.3.6</icn.version>
+    </properties>
+
     <dependencies>
         <!-- maven plugin dependencies -->
         <dependency>
@@ -33,14 +38,43 @@
             <version>3.4</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>com.github.dgautier</groupId>
+            <artifactId>maven-plugin-tools</artifactId>
+            <version>0.0</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        
         <!-- Remote System Utility -->
         <dependency>
             <groupId>com.xebialabs.overthere</groupId>
             <artifactId>overthere</artifactId>
             <version>2.4.3</version>
             <scope>compile</scope>
-        </dependency>        
+        </dependency>  
+        
+        <!-- IBM Content Navigator Tools -->
+        <dependency>
+            <groupId>com.ibm.ecm</groupId>
+            <artifactId>navigator-api</artifactId>
+            <version>${icn.version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.dgautier</groupId>
+            <artifactId>icn-tools</artifactId>
+            <version>0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        
+        <!-- JSON parser -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>2.3.1</version>
+            <scope>compile</scope>
+        </dependency>
         
         <!-- Test dependencies -->
         <dependency>
@@ -57,7 +91,32 @@
         </dependency>
     </dependencies>
 
-    <properties>
-        <maven.version>3.2.1</maven.version>
-    </properties>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-plugin-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <goalPrefix>icn</goalPrefix>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>default-descriptor</id>
+                        <goals>
+                            <goal>descriptor</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                    <execution>
+                        <id>help-descriptor</id>
+                        <goals>
+                            <goal>helpmojo</goal>
+                        </goals>
+                        <phase>process-classes</phase>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 </project>
